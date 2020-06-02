@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
+    
     struct PointF3d
     {
         public PointF3d(float x, float y, float z)
@@ -27,7 +28,8 @@ namespace WindowsFormsApplication1
     {
         Graphics g;
         PointF center;
-        
+        float Q1 ;
+        float Q2;
         float[,] figure = { {  50,  0,  0,  1 },
                             {   0, 50,  0,  1 },
                             {   0,  0, 50,  1 },
@@ -38,6 +40,7 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             g = display.CreateGraphics();
             center = new PointF(display.Width / 2, display.Height / 2);
+            
         }
         
         private void draw_axises()
@@ -108,7 +111,7 @@ namespace WindowsFormsApplication1
 
         private void draw_figure()
         {
-            Pen pen = new Pen(Color.Red, 3);
+            Pen pen = new Pen(Color.Red, 2);
                             
             //              [                 X                      ], [                  Y                     ]    [                  X                     ]  [                    Y                    ]
             g.DrawLine(pen, center.X + figure[0, 0] - figure[0, 2] / 2, center.Y - figure[0, 1] + figure[0, 2] / 2,   center.X + figure[1, 0] - figure[1, 2] / 2, center.Y - figure[1, 1] + figure[1, 2] / 2);
@@ -125,8 +128,83 @@ namespace WindowsFormsApplication1
             Refresh();
             draw_axises();
             var ref_matr = reflect_zox();
-            this.figure = this.multiply(figure, ref_matr);
+            //this.figure = this.multiply(figure, ref_matr);
             draw_figure();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+        private float[,] reflect_vrash()///!!change gradus
+        {
+            float[,] matr = { { 1, 0,  0, 0 },
+                              {0, (float)Math.Cos( Q2* Math.PI / 180),  (float)Math.Sin( Q2*Math.PI / 180), 0 },
+                              {0, -1* (float)Math.Sin( Q2*Math.PI / 180), (float)Math.Cos( Q2* Math.PI / 180), 0 },
+                              {0, 0,  0, 1 } };
+            return matr;
+
+        }
+        private void trackBar1_Scroll(object sender, EventArgs e) //по иксу
+        {
+            Q2 = 0;
+            Q2 = trackBar1.Value;
+            Edit2.Text = Q2.ToString();
+            var ref_matr = reflect_vrash();
+            this.figure = this.multiply(figure, ref_matr);
+            redraw();
+        }
+        private float[,] reflect_vresh()
+        {
+            float[,] matr = { { (float)Math.Cos(Q1* Math.PI / 180), 0, -1 * (float)Math.Sin( Q1 * Math.PI / 180), 0 },
+                              {0, 1,  0, 0 },
+                              {(float)Math.Sin( Q1*Math.PI / 180), 0, (float)Math.Cos( Q1* Math.PI / 180), 0 },
+                              {0, 0,  0, 1 } };
+            return matr;
+          
+        }
+        private float[,] multiply1(float[,] m1, float[,] m2)
+        {
+            int columns = m1.GetLength(1);
+            int rows = m1.GetLength(0);
+
+            float[,] res = new float[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < columns; j++)
+                {
+                    for (int loop = 0; loop < columns; loop++)
+                        res[i, j] += m1[i, loop] * m2[loop, j];
+                }
+
+            return res;
+        }
+        private void redraw()
+        {
+            Pen pen = new Pen(Color.Red, 2);
+
+            //              [                 X                      ], [                  Y                     ]    [                  X                     ]  [                    Y                    ]
+            g.DrawLine(pen, center.X + figure[0, 0] - figure[0, 2] / 2, center.Y - figure[0, 1] + figure[0, 2] / 2, center.X + figure[1, 0] - figure[1, 2] / 2, center.Y - figure[1, 1] + figure[1, 2] / 2);
+            g.DrawLine(pen, center.X + figure[1, 0] - figure[1, 2] / 2, center.Y - figure[1, 1] + figure[1, 2] / 2, center.X + figure[2, 0] - figure[2, 2] / 2, center.Y - figure[2, 1] + figure[2, 2] / 2);
+            g.DrawLine(pen, center.X + figure[2, 0] - figure[2, 2] / 2, center.Y - figure[2, 1] + figure[2, 2] / 2, center.X + figure[0, 0] - figure[0, 2] / 2, center.Y - figure[0, 1] + figure[0, 2] / 2);
+            g.DrawLine(pen, center.X + figure[0, 0] - figure[0, 2] / 2, center.Y - figure[0, 1] + figure[0, 2] / 2, center.X + figure[3, 0] - figure[3, 2] / 2, center.Y - figure[3, 1] + figure[3, 2] / 2);
+            g.DrawLine(pen, center.X + figure[1, 0] - figure[1, 2] / 2, center.Y - figure[1, 1] + figure[1, 2] / 2, center.X + figure[3, 0] - figure[3, 2] / 2, center.Y - figure[3, 1] + figure[3, 2] / 2);
+            g.DrawLine(pen, center.X + figure[2, 0] - figure[2, 2] / 2, center.Y - figure[2, 1] + figure[2, 2] / 2, center.X + figure[3, 0] - figure[3, 2] / 2, center.Y - figure[3, 1] + figure[3, 2] / 2);
+        }
+        private void trackBar2_Scroll(object sender, EventArgs e) //по игрику
+        {
+            Q1 = 0;
+           Q1 = trackBar2.Value;
+           Edit1.Text = Q1.ToString();
+            var ref_matr = reflect_vresh();
+            this.figure = this.multiply(figure, ref_matr);
+            redraw();
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
