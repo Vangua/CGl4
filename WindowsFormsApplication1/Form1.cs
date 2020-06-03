@@ -150,10 +150,6 @@ namespace WindowsFormsApplication1
             draw_figure();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
         private float[,] reflect_vrash()
         {
             float[,] matr = { { 1, 0,  0, 0 },
@@ -165,6 +161,8 @@ namespace WindowsFormsApplication1
         }
         private void trackBar1_Scroll(object sender, EventArgs e) //по иксу
         {
+            Refresh();
+            draw_axises();
             Q2 = 0;
             Q2 = trackBar1.Value;
             Edit2.Text = Q2.ToString();
@@ -197,28 +195,30 @@ namespace WindowsFormsApplication1
 
             return res;
         }
-        private void redraw()
+        private void redraw(float[,] matr)
         {
             Pen pen = new Pen(Color.BlueViolet, 2);
 
             //              [                 X                      ], [                  Y                     ]    [                  X                     ]  [                    Y                    ]
-            g.DrawLine(pen, center.X + figure[0, 0] - figure[0, 2] / 2, center.Y - figure[0, 1] + figure[0, 2] / 2, center.X + figure[1, 0] - figure[1, 2] / 2, center.Y - figure[1, 1] + figure[1, 2] / 2);
-            g.DrawLine(pen, center.X + figure[1, 0] - figure[1, 2] / 2, center.Y - figure[1, 1] + figure[1, 2] / 2, center.X + figure[2, 0] - figure[2, 2] / 2, center.Y - figure[2, 1] + figure[2, 2] / 2);
-            g.DrawLine(pen, center.X + figure[2, 0] - figure[2, 2] / 2, center.Y - figure[2, 1] + figure[2, 2] / 2, center.X + figure[0, 0] - figure[0, 2] / 2, center.Y - figure[0, 1] + figure[0, 2] / 2);
-            g.DrawLine(pen, center.X + figure[0, 0] - figure[0, 2] / 2, center.Y - figure[0, 1] + figure[0, 2] / 2, center.X + figure[3, 0] - figure[3, 2] / 2, center.Y - figure[3, 1] + figure[3, 2] / 2);
-            g.DrawLine(pen, center.X + figure[1, 0] - figure[1, 2] / 2, center.Y - figure[1, 1] + figure[1, 2] / 2, center.X + figure[3, 0] - figure[3, 2] / 2, center.Y - figure[3, 1] + figure[3, 2] / 2);
-            g.DrawLine(pen, center.X + figure[2, 0] - figure[2, 2] / 2, center.Y - figure[2, 1] + figure[2, 2] / 2, center.X + figure[3, 0] - figure[3, 2] / 2, center.Y - figure[3, 1] + figure[3, 2] / 2);
+            g.DrawLine(pen, center.X + matr[0, 0] - matr[0, 2] / 2, center.Y - matr[0, 1] + matr[0, 2] / 2, center.X + matr[1, 0] - matr[1, 2] / 2, center.Y - matr[1, 1] + matr[1, 2] / 2);
+            g.DrawLine(pen, center.X + matr[1, 0] - matr[1, 2] / 2, center.Y - matr[1, 1] + matr[1, 2] / 2, center.X + matr[2, 0] - matr[2, 2] / 2, center.Y - matr[2, 1] + matr[2, 2] / 2);
+            g.DrawLine(pen, center.X + matr[2, 0] - matr[2, 2] / 2, center.Y - matr[2, 1] + matr[2, 2] / 2, center.X + matr[0, 0] - matr[0, 2] / 2, center.Y - matr[0, 1] + matr[0, 2] / 2);
+            g.DrawLine(pen, center.X + matr[0, 0] - matr[0, 2] / 2, center.Y - matr[0, 1] + matr[0, 2] / 2, center.X + matr[3, 0] - matr[3, 2] / 2, center.Y - matr[3, 1] + matr[3, 2] / 2);
+            g.DrawLine(pen, center.X + matr[1, 0] - matr[1, 2] / 2, center.Y - matr[1, 1] + matr[1, 2] / 2, center.X + matr[3, 0] - matr[3, 2] / 2, center.Y - matr[3, 1] + matr[3, 2] / 2);
+            g.DrawLine(pen, center.X + matr[2, 0] - matr[2, 2] / 2, center.Y - matr[2, 1] + matr[2, 2] / 2, center.X + matr[3, 0] - matr[3, 2] / 2, center.Y - matr[3, 1] + matr[3, 2] / 2);
         }
         private void trackBar2_Scroll(object sender, EventArgs e) //по игрику
         {
+            Refresh();
+            draw_axises();
             Q1 = 0;
-           Q1 = trackBar2.Value;
-           Edit1.Text = Q1.ToString();
+            Q1 = trackBar2.Value;
+            Edit1.Text = Q1.ToString();
             var ref_matr = reflect_vresh();
             this.figure = this.multiply(figure, ref_matr);
             draw_figure();
-
         }
+
         private float[,] projection_yoz()
         {
             float[,] matr = { {0, 0, 0, 0 },
@@ -249,22 +249,22 @@ namespace WindowsFormsApplication1
         private void button1_Click(object sender, EventArgs e)
         {
             var ref_matr = projection_yoz();
-            this.figure = this.multiply(figure, ref_matr);
-            redraw();
+            ref_matr = this.multiply(figure, ref_matr);
+            redraw(ref_matr);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             var ref_matr = projection_xoz();
-            this.figure = this.multiply(figure, ref_matr);
-            redraw();
+            ref_matr = this.multiply(figure, ref_matr);
+            redraw(ref_matr);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             var ref_matr = projection_xoy();
-            this.figure = this.multiply(figure, ref_matr);
-            redraw();
+            ref_matr = this.multiply(figure, ref_matr);
+            redraw(ref_matr);
         }
     }
 }

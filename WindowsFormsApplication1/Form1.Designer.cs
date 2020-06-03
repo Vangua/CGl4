@@ -76,7 +76,6 @@
             this.label1.Size = new System.Drawing.Size(58, 13);
             this.label1.TabIndex = 15;
             this.label1.Text = "Повороты";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // trackBar1
             // 
@@ -87,7 +86,7 @@
             this.trackBar1.Size = new System.Drawing.Size(89, 45);
             this.trackBar1.TabIndex = 16;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
-            this.trackBar1.ValueChanged += new System.EventHandler(this.btn_reflect_zox_Click);
+            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // trackBar2
             // 
@@ -98,7 +97,7 @@
             this.trackBar2.Size = new System.Drawing.Size(89, 45);
             this.trackBar2.TabIndex = 17;
             this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
-            this.trackBar2.ValueChanged += new System.EventHandler(this.btn_reflect_zox_Click);
+            this.trackBar2.ValueChanged += new System.EventHandler(this.trackBar2_Scroll);
             // 
             // label2
             // 
@@ -107,7 +106,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 13);
             this.label2.TabIndex = 18;
-            this.label2.Text = "-360";
+            this.label2.Text = "-180";
             // 
             // label3
             // 
@@ -116,7 +115,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(28, 13);
             this.label3.TabIndex = 19;
-            this.label3.Text = "-360";
+            this.label3.Text = "-180";
             // 
             // label4
             // 
@@ -125,7 +124,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(25, 13);
             this.label4.TabIndex = 20;
-            this.label4.Text = "360";
+            this.label4.Text = "180";
             // 
             // label5
             // 
@@ -134,7 +133,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(25, 13);
             this.label5.TabIndex = 21;
-            this.label5.Text = "360";
+            this.label5.Text = "180";
             // 
             // Edit1
             // 
