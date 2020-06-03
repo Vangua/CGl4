@@ -123,12 +123,30 @@ namespace WindowsFormsApplication1
         }
 
 
-        private void btn_reflect_Click(object sender, EventArgs e)
+        private void btn_reflect_zox_Click(object sender, EventArgs e)
         {
             Refresh();
             draw_axises();
             var ref_matr = reflect_zox();
-            //this.figure = this.multiply(figure, ref_matr);
+            this.figure = this.multiply(figure, ref_matr);
+            draw_figure();
+        }
+
+        private void btn_reflect_xoy_Click(object sender, EventArgs e)
+        {
+            Refresh();
+            draw_axises();
+            var ref_matr = reflect_xoy();
+            this.figure = this.multiply(figure, ref_matr);
+            draw_figure();
+        }
+
+        private void btn_reflect_yoz_Click(object sender, EventArgs e)
+        {
+            Refresh();
+            draw_axises();
+            var ref_matr = reflect_yoz();
+            this.figure = this.multiply(figure, ref_matr);
             draw_figure();
         }
 
@@ -202,9 +220,5 @@ namespace WindowsFormsApplication1
 
         }
 
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
