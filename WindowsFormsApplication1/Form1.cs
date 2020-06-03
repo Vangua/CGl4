@@ -154,11 +154,11 @@ namespace WindowsFormsApplication1
         {
 
         }
-        private float[,] reflect_vrash()///!!change gradus
+        private float[,] reflect_vrash()
         {
             float[,] matr = { { 1, 0,  0, 0 },
                               {0, (float)Math.Cos( Q2* Math.PI / 180),  (float)Math.Sin( Q2*Math.PI / 180), 0 },
-                              {0, -1* (float)Math.Sin( Q2*Math.PI / 180), (float)Math.Cos( Q2* Math.PI / 180), 0 },
+                              {0, (float)-Math.Sin( Q2*Math.PI / 180), (float)Math.Cos( Q2* Math.PI / 180), 0 },
                               {0, 0,  0, 1 } };
             return matr;
 
@@ -170,11 +170,11 @@ namespace WindowsFormsApplication1
             Edit2.Text = Q2.ToString();
             var ref_matr = reflect_vrash();
             this.figure = this.multiply(figure, ref_matr);
-            redraw();
+            draw_figure();
         }
         private float[,] reflect_vresh()
         {
-            float[,] matr = { { (float)Math.Cos(Q1* Math.PI / 180), 0, -1 * (float)Math.Sin( Q1 * Math.PI / 180), 0 },
+            float[,] matr = { { (float)Math.Cos(Q1* Math.PI / 180), 0,  (float)-Math.Sin( Q1 * Math.PI / 180), 0 },
                               {0, 1,  0, 0 },
                               {(float)Math.Sin( Q1*Math.PI / 180), 0, (float)Math.Cos( Q1* Math.PI / 180), 0 },
                               {0, 0,  0, 1 } };
@@ -199,7 +199,7 @@ namespace WindowsFormsApplication1
         }
         private void redraw()
         {
-            Pen pen = new Pen(Color.Red, 2);
+            Pen pen = new Pen(Color.BlueViolet, 2);
 
             //              [                 X                      ], [                  Y                     ]    [                  X                     ]  [                    Y                    ]
             g.DrawLine(pen, center.X + figure[0, 0] - figure[0, 2] / 2, center.Y - figure[0, 1] + figure[0, 2] / 2, center.X + figure[1, 0] - figure[1, 2] / 2, center.Y - figure[1, 1] + figure[1, 2] / 2);
@@ -216,9 +216,55 @@ namespace WindowsFormsApplication1
            Edit1.Text = Q1.ToString();
             var ref_matr = reflect_vresh();
             this.figure = this.multiply(figure, ref_matr);
-            redraw();
+            draw_figure();
 
         }
+        private float[,] projection_yoz()
+        {
+            float[,] matr = { {0, 0, 0, 0 },
+                              {0, 1, 0, 0 },
+                              {0, 0, 1, 0 },
+                              {0, 0, 0, 1 } };
+            return matr;
 
+        }
+        private float[,] projection_xoz()///change matrix
+        {
+            float[,] matr = { {1, 0, 0, 0 },
+                              {0, 0, 0, 0 },
+                              {0, 0, 1, 0 },
+                              {0, 0, 0, 1 } };
+            return matr;
+
+        }
+        private float[,] projection_xoy()///change matrix
+        {
+            float[,] matr = { {1, 0, 0, 0 },
+                              {0, 1, 0, 0 },
+                              {0, 0, 0, 0 },
+                              {0, 0, 0, 1 } };
+            return matr;
+
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var ref_matr = projection_yoz();
+            this.figure = this.multiply(figure, ref_matr);
+            redraw();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var ref_matr = projection_xoz();
+            this.figure = this.multiply(figure, ref_matr);
+            redraw();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var ref_matr = projection_xoy();
+            this.figure = this.multiply(figure, ref_matr);
+            redraw();
+        }
     }
 }
