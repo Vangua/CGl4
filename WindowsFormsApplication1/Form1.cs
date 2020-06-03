@@ -61,6 +61,7 @@ namespace WindowsFormsApplication1
             Font mf = new Font("Arial", 12);
             g.DrawString("x", mf, Brushes.Black, new PointF( width - 10, center.Y + 5 ));
             g.DrawString("y", mf, Brushes.Black, new PointF( center.X + 5, 15));
+            g.DrawString("z", mf, Brushes.Black, new PointF(30, height - 30));
             g.DrawString("0", mf, Brushes.Black, new PointF(center.X + 10, center.Y + 10) );   
         }
 
