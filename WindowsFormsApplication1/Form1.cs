@@ -180,22 +180,7 @@ namespace WindowsFormsApplication1
             return matr;
           
         }
-        private float[,] multiply1(float[,] m1, float[,] m2)
-        {
-            int columns = m1.GetLength(1);
-            int rows = m1.GetLength(0);
 
-            float[,] res = new float[rows, columns];
-
-            for (int i = 0; i < rows; i++)
-                for (int j = 0; j < columns; j++)
-                {
-                    for (int loop = 0; loop < columns; loop++)
-                        res[i, j] += m1[i, loop] * m2[loop, j];
-                }
-
-            return res;
-        }
         private void redraw(float[,] matr)
         {
             Pen pen = new Pen(Color.BlueViolet, 2);
@@ -220,52 +205,27 @@ namespace WindowsFormsApplication1
             draw_figure();
         }
 
-        private float[,] projection_yoz()
+        private float[,] projection_trimetry(float alpha, float beta)
         {
-            float[,] matr = { {0, 0, 0, 0 },
-                              {0, 1, 0, 0 },
-                              {0, 0, 1, 0 },
-                              {0, 0, 0, 1 } };
+            float cos_beta  = (float)Math.Cos(beta);
+            float sin_beta  = (float)Math.Sin(beta);
+            float cos_alpha = (float)Math.Cos(alpha);
+            float sin_alpha = (float)Math.Sin(alpha);
+            float[,] matr = { { cos_beta,  sin_alpha * sin_beta, 0, 0},
+                              {        0,             cos_alpha, 0, 0},
+                              { sin_beta, -sin_alpha * cos_beta, 0, 0},
+                              {        0,                     0, 0, 1 } };
             return matr;
-
-        }
-        private float[,] projection_xoz()///change matrix
-        {
-            float[,] matr = { {1, 0, 0, 0 },
-                              {0, 0, 0, 0 },
-                              {0, 0, 1, 0 },
-                              {0, 0, 0, 1 } };
-            return matr;
-
-        }
-        private float[,] projection_xoy()///change matrix
-        {
-            float[,] matr = { {1, 0, 0, 0 },
-                              {0, 1, 0, 0 },
-                              {0, 0, 0, 0 },
-                              {0, 0, 0, 1 } };
-            return matr;
-
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var ref_matr = projection_yoz();
-            ref_matr = this.multiply(figure, ref_matr);
-            redraw(ref_matr);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var ref_matr = projection_xoz();
+            float angle_x = float.Parse(Edit1.Text);
+            float angle_y = float.Parse(Edit2.Text);
+            var ref_matr = projection_trimetry(angle_x, angle_y);
             ref_matr = this.multiply(figure, ref_matr);
             redraw(ref_matr);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var ref_matr = projection_xoy();
-            ref_matr = this.multiply(figure, ref_matr);
-            redraw(ref_matr);
-        }
     }
 }
